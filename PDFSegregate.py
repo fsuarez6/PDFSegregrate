@@ -65,9 +65,13 @@ class PageColorInfo():
 
 def extract_pdf_pages(pdf, pages):
   extract = PdfFileWriter()
-  for i in range(pdf.numPages):
-    if (i+1) in pages:
-      extract.addPage(pdf.getPage(i))
+  num_pages = pdf.getNumPages()
+  for num in pages:
+    idx = num-1
+    if idx >= 0 and idx < num_pages:
+      extract.addPage(pdf.getPage(idx))
+    else:
+      print 'WARNING Skipping invalid page number: {0}'.format(num)
   return extract
 
 def parse_args():
